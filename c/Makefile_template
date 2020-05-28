@@ -1,0 +1,35 @@
+
+NAME = __NAME__
+
+CC = gcc
+
+SRCS = __SRCS__
+
+OBJS = $(SRCS:.c=.o)
+
+RM = rm -f
+
+CFLAGS += -Werror -Wall -Wextra
+CFLAGS += -I.
+LDFLAGS += -lcriterion -lm
+
+GREEN = '\033[0;32m'
+NO_COLOR = '\033[0m'
+
+%.o : %.c
+	@$ $(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(CC) $(CFLAGS) -c $< -o $@ ["$(GREEN)"OK"$(NO_COLOR)"]"
+.SUFFIXES: .o .c
+
+$(NAME): $(OBJS)
+	@$ $(CC) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@echo "$(CC) $(OBJS) $(LDFLAGS) -o $(NAME) \
+	["$(GREEN)"LINKING OK"$(NO_COLOR)"]"
+
+clean:
+	$(RM) $(OBJS)
+
+fclean: clean
+	$(RM) $(NAME)
+
+.PHONY: tests_run val_run clean fclean

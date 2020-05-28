@@ -1,0 +1,10 @@
+version: '3'
+services:
+  bot:
+    restart: always
+    build: .
+    env_file:
+      - .env
+    command: python3 /app/bot/cpoolbot.py
+    volumes:
+      - ./:/app/bot
